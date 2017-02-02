@@ -4,7 +4,7 @@ TimeGallery is a project under baozijuan.com
 
 Website link: [www.baozijuan.com] (http://www.baozijuan.com/TimeGallery/login).
 
-*Copyright &copy; 2016 Bao Cong. All rights reserved.*
+*Copyright &copy; 2016 - 2017 Bao Cong. All rights reserved.*
 
 ## Open source projects used by TimeGallery
 
