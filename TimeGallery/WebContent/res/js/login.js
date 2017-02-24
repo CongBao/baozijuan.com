@@ -150,3 +150,13 @@ function checkStatus() {
 		$("#submitBtn").attr("disabled", "disabled");
 	}
 }
+
+// md5
+$('#loginForm').submit(function() {
+	$('#signPassword').val($.md5($('#signPassword').val()));
+});
+
+$('#registForm').submit(function() {
+	$('#registPassword').val($.md5($('#registPassword').val()));
+	$('#confirmPassword').val($.md5($('#confirmPassword').val()));
+});

@@ -1,5 +1,7 @@
 package com.baozijuan.timegallery.action.user;
 
+import static com.baozijuan.timegallery.service.UserManager.LOGIN_SUCCESS;
+
 import com.baozijuan.timegallery.action.base.UserBaseAction;
 import com.baozijuan.timegallery.action.base.WebConstant;
 import com.baozijuan.timegallery.domain.User;
@@ -41,7 +43,9 @@ public class EditPasswordAction extends UserBaseAction {
 	public String execute() throws Exception {
 		ActionContext actionContext = ActionContext.getContext();
 		User user = userManager.getUserByAccount(getAccount());
-		if (getOldPassword().equals(user.getPassword())) {
+		user.setPassword(getOldPassword());
+		int result = userManager.validLogin(user);
+		if (result == LOGIN_SUCCESS) {
 			user = userManager.updatePassword(user, getNewPassword());
 			actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(user.getAccount()));
 			actionContext.getSession().put(WebConstant.AUTHORITY,

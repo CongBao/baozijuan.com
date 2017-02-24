@@ -53,7 +53,7 @@
 			<div class="col-md-6">
 				<h3 class="text-center">Sign in with your e-mail account</h3>
 				<hr>
-				<form class="form-horizontal" method="post" action="login">
+				<form class="form-horizontal" id="loginForm" method="post" action="login">
 					<div class="form-group">
 						<label for="signEmail" class="col-sm-2 control-label">Email</label>
 						<div class="col-sm-10">
@@ -132,7 +132,7 @@
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<form class="form-horizontal" method="post" action="register">
+				<form class="form-horizontal" id="registForm" method="post" action="register">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -243,6 +243,7 @@
 			$(".container").removeAttr("style");
 		});
 	</script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery.md5.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/login.js"></script>
 </body>
 </html>

@@ -72,3 +72,9 @@ function checkPass() {
 		$("#submitPassword").attr("disabled", "disabled");
 	}
 }
+
+// md5
+$('#resetPassForm').submit(function() {
+	$('#newPassword').val($.md5($('#newPassword').val()));
+	$('#confirmPassword').val($.md5($('#confirmPassword').val()));
+});

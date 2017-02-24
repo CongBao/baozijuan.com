@@ -20,7 +20,7 @@
 			<div class="col-md-offset-3 col-md-6">
 				<h3 class="text-center">Please enter your new password.</h3>
 				<br>
-				<form class="form-horizontal" method="post" action="resetPassword">
+				<form class="form-horizontal" id="resetPassForm" method="post" action="resetPassword">
 					<div class="form-group" id="passGroup">
 						<label for="newPassword" class="col-sm-4 control-label">New Password</label>
 						<div class="col-sm-8">
@@ -48,6 +48,7 @@
 		rowObj.style.marginTop = window.innerHeight / 6 + "px";
 		rowObj.style.marginBottom = window.innerHeight / 6 + "px";
 	</script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery.md5.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/resetPassword.js"></script>
 </body>
 </html>

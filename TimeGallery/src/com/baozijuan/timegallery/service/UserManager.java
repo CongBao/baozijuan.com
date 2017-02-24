@@ -18,9 +18,9 @@ public interface UserManager {
 
 	int REGIST_SUCCESS = 1;
 
-	int validLogin(User user);
+	int validLogin(User user) throws Exception;
 
-	int validRegist(User user);
+	int validRegist(User user) throws Exception;
 
 	boolean isUserExist (String account);
 
@@ -42,9 +42,9 @@ public interface UserManager {
 
 	User updateMailVerifyState(User origin, boolean verified);
 
-	User updateAccount(User origin, String account);
+	User updateAccount(User origin, String account) throws Exception;
 
-	User updatePassword(User origin, String password);
+	User updatePassword(User origin, String password) throws Exception;
 
 	User updateUserInfo(UserBean update);
 

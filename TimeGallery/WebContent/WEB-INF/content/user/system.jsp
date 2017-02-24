@@ -48,11 +48,15 @@
 									<h3 class="panel-title">Change Account</h3>
 								</div>
 								<div class="panel-body">
-									<form method="post" action="editAccount">
-										<input type="hidden" name="account" value="${sessionScope.user.account}">
+									<form method="post" id="editAccountForm" action="editAccount">
+										<input type="hidden" name="oldAccount" value="${sessionScope.user.account}">
 										<div class="form-group">
 											<label for="oldAccount">Current Account</label>
 											<input type="text" class="form-control" id="oldAccount" placeholder="${sessionScope.user.account}" readonly="readonly">
+										</div>
+										<div class="form-group">
+											<label for="verifyPassword">Current Password</label>
+											<input type="password" class="form-control" id="verifyPassword" placeholder="Current Password" name="verifyPassword">
 										</div>
 										<div class="form-group" id="accountGroup">
 											<label for="editAccount">New Account</label>
@@ -79,7 +83,7 @@
 									<h3 class="panel-title">Change password</h3>
 								</div>
 								<div class="panel-body">
-									<form method="post" action="editPassword">
+									<form method="post" id="editPassForm" action="editPassword">
 										<input type="hidden" name="account" value="${sessionScope.user.account}">
 										<div class="form-group">
 											<label for="oldPassword">Current Password</label>
@@ -146,6 +150,7 @@
 		</div>
 	</div>
 	<footer><%@ include file="../footer.jsp"%></footer>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery.md5.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/system.js"></script>
 </body>
 </html>

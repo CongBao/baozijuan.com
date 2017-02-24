@@ -134,3 +134,14 @@ $("#agreement").click(function() {
 		$("#deleteAccount").attr("disabled", "disabled");
 	}
 });
+
+// md5
+$('#editAccountForm').submit(function() {
+	$('#verifyPassword').val($.md5($('#verifyPassword').val()));
+});
+
+$('#editPassForm').submit(function() {
+	$('#oldPassword').val($.md5($('#oldPassword').val()));
+	$('#editPassword').val($.md5($('#editPassword').val()));
+	$('#confirmPassword').val($.md5($('#confirmPassword').val()));
+});

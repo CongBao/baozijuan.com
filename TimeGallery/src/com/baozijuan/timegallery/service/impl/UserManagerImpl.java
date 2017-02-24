@@ -10,6 +10,7 @@ import com.baozijuan.timegallery.dao.UserDao;
 import com.baozijuan.timegallery.domain.Authority;
 import com.baozijuan.timegallery.domain.User;
 import com.baozijuan.timegallery.exception.TGException;
+import com.baozijuan.timegallery.function.Validator;
 import com.baozijuan.timegallery.service.UserManager;
 import com.baozijuan.timegallery.vo.AuthorityBean;
 import com.baozijuan.timegallery.vo.UserBean;
@@ -28,15 +29,17 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public int validLogin(User user) {
+	public int validLogin(User user) throws Exception {
+		user.setPassword(Validator.calculate(user.getPassword(), user.getAccount()));
 		if (userDao.findByAccountAndPass(user).size() >= 1)
 			return LOGIN_SUCCESS;
 		return LOGIN_FAIL;
 	}
 
 	@Override
-	public int validRegist(User user) {
-		if (userDao.findByAccountAndPass(user).size() < 1)
+	public int validRegist(User user) throws Exception {
+		user.setPassword(Validator.calculate(user.getPassword(), user.getAccount()));
+		if (!isUserExist(user.getAccount()))
 			if (userDao.save(user) != null)
 				return REGIST_SUCCESS;
 		return REGIST_FAIL;
@@ -133,10 +136,11 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public User updateAccount(User origin, String account) {
+	public User updateAccount(User origin, String account) throws Exception {
 		if (userDao.findByAccount(account) == null) {
 			User change = origin;
 			change.setAccount(account);
+			change.setPassword(Validator.calculate(origin.getPassword(), account));
 			change.setUpdatedDate(DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date()));
 			userDao.update(change);
 			return change;
@@ -146,9 +150,9 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public User updatePassword(User origin, String password) {
+	public User updatePassword(User origin, String password) throws Exception {
 		User change = origin;
-		change.setPassword(password);
+		change.setPassword(Validator.calculate(password, origin.getAccount()));
 		change.setUpdatedDate(DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date()));
 		userDao.update(change);
 		return change;
