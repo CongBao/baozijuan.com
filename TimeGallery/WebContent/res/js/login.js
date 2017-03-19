@@ -151,6 +151,13 @@ function checkStatus() {
 	}
 }
 
+$("#submitBtn").click(function() {
+	var $btn = $(this);
+	$btn.button('loading'), setTimeout(function() {
+		$btn.button('reset');
+	}, 30e3);
+});
+
 // md5
 $('#loginForm').submit(function() {
 	$('#signPassword').val($.md5($('#signPassword').val()));
