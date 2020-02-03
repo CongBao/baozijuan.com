@@ -2,7 +2,7 @@
 
 baozijuan.com is a web site registered by Bao Cong and developed for personal purpose.
 
-*Copyright &copy; 2016 - 2017 Bao Cong. All rights reserved.*
+*Copyright &copy; 2016 - 2020 Bao Cong. All rights reserved.*
 
 ## Projects under baozijuan.com
 
