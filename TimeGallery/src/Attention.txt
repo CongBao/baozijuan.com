@@ -1,8 +1,0 @@
-If com.baozijuan.timegallery.domain.* changed, the followings should be changed too.
-
-1. com.baozijuan.timegallery.converter.*
-2. com.baozijuan.timegallery.service.impl.UserManagerImpl.getUserBeanByAccount
-3. com.baozijuan.timegallery.service.impl.UserManagerImpl.getAuthorityBeanByAccount
-4. com.baozijuan.timegallery.service.impl.UserManagerImpl.updateUserInfo
-5. com.baozijuan.timegallery.vo.*
-6. /WebContent/WEB-INF/content/user/*.*
