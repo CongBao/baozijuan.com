@@ -1,10 +1,12 @@
 package com.baozijuan.timegallery.service;
 
-import com.baozijuan.timegallery.bean.Result;
+import com.baozijuan.timegallery.bean.Response;
 import com.baozijuan.timegallery.bean.User;
 
 public interface UserService {
 
-    Result login(User user);
+    Response login(User user);
+
+    Response register(User user);
 
 }

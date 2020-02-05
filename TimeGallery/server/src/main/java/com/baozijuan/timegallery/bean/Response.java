@@ -2,7 +2,7 @@ package com.baozijuan.timegallery.bean;
 
 import java.io.Serializable;
 
-public class Result implements Serializable {
+public class Response implements Serializable {
 
     private Integer code;
     private String message;

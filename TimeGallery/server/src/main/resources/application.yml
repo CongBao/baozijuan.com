@@ -1,0 +1,12 @@
+server:
+  port: 8888
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql:///timegallery?useUnicode=true&characterEncoding=UTF-8
+    username: bill
+    password: 20200401
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
