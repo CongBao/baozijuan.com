@@ -1,34 +1,83 @@
 package com.baozijuan.timegallery.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.Instant;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
-public class User implements UserDetails {
+@Entity
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "user")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class User implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "username", unique = true, nullable = false, length = 64)
     private String username;
+
+    @Column(name = "password", nullable = false, length = 64)
     private String password;
-    private List<Role> roles;
 
-    private Instant createdTime;
-    private Instant updatedTime;
-    private Instant lastLoginTime;
-
+    @Column(name = "dob")
     private Instant dob;
+
+    @Column(name = "email", unique = true, length = 64)
     private String email;
+
+    @Column(name = "gender", length = 16)
     private String gender;
+
+    @Column(name = "nickname", length = 64)
     private String nickname;
+
+    @Column
     private String signature;
+
+    @Column
     private String description;
 
+    @Column
     private boolean enabled;
+
+    @CreatedDate
+    @Column(name = "created_date", updatable = false)
+    private Instant createdDate;
+
+    @LastModifiedDate
+    @Column(name = "updated_date")
+    private Instant updatedDate;
+
+    @ManyToMany(targetEntity = Role.class, cascade = CascadeType.ALL)
+    @JoinTable(name = "role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<Role> roles;
+
+    public User() {
+    }
+
+    public User(Long id, String username, String password, Instant dob, String email, String gender, String nickname, String signature, String description, boolean enabled, Instant createdDate, Instant updatedDate, Set<Role> roles) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.dob = dob;
+        this.email = email;
+        this.gender = gender;
+        this.nickname = nickname;
+        this.signature = signature;
+        this.description = description;
+        this.enabled = enabled;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.roles = roles;
+    }
 
     public Long getId() {
         return id;
@@ -38,7 +87,6 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    @Override
     public String getUsername() {
         return username;
     }
@@ -47,45 +95,12 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    @Override
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-    public Instant getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(Instant createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public Instant getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(Instant updatedTime) {
-        this.updatedTime = updatedTime;
-    }
-
-    public Instant getLastLoginTime() {
-        return lastLoginTime;
-    }
-
-    public void setLastLoginTime(Instant lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
     }
 
     public Instant getDob() {
@@ -136,7 +151,6 @@ public class User implements UserDetails {
         this.description = description;
     }
 
-    @Override
     public boolean isEnabled() {
         return enabled;
     }
@@ -145,30 +159,28 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    @Override
-    @JsonIgnore
-    public boolean isAccountNonExpired() {
-        return true;
+    public Instant getCreatedDate() {
+        return createdDate;
     }
 
-    @Override
-    @JsonIgnore
-    public boolean isAccountNonLocked() {
-        return true;
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
     }
 
-    @Override
-    @JsonIgnore
-    public boolean isCredentialsNonExpired() {
-        return true;
+    public Instant getUpdatedDate() {
+        return updatedDate;
     }
 
-    @Override
-    @JsonIgnore
-    public List<GrantedAuthority> getAuthorities() {
-       return roles.stream()
-               .map(r -> new SimpleGrantedAuthority("ROLE_" + r.getName()))
-               .collect(Collectors.toList());
+    public void setUpdatedDate(Instant updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
 }

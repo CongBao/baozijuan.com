@@ -7,6 +7,6 @@ spring:
     url: jdbc:mysql:///timegallery?useUnicode=true&characterEncoding=UTF-8
     username: bill
     password: 20200401
-  jackson:
-    serialization:
-      write-dates-as-timestamps: false
+  jpa:
+    hibernate:
+      ddl-auto: update
