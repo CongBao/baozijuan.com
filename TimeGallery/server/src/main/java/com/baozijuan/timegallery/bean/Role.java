@@ -1,10 +1,13 @@
 package com.baozijuan.timegallery.bean;
 
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "role")
@@ -12,7 +15,7 @@ import java.io.Serializable;
 public class Role implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id")
     private Long id;
 
     @Column(name = "role_name", unique = true, nullable = false, length = 64)
@@ -40,6 +43,20 @@ public class Role implements Serializable {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Role role = (Role) object;
+        return Objects.equals(id, role.id) &&
+                Objects.equals(roleName, role.roleName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, roleName);
     }
 
 }

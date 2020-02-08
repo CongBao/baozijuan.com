@@ -5,8 +5,12 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql:///timegallery?useUnicode=true&characterEncoding=UTF-8
-    username: bill
+    username: root
     password: 20200401
   jpa:
     hibernate:
       ddl-auto: update
+
+logging:
+  file:
+    name: log/timegallery.log

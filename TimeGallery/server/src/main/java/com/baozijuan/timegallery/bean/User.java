@@ -1,5 +1,6 @@
 package com.baozijuan.timegallery.bean;
 
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.annotation.CreatedDate;
@@ -9,15 +10,18 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "user")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User implements Serializable {
 
     @Id
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -33,20 +37,20 @@ public class User implements Serializable {
     @Column(name = "email", unique = true, length = 64)
     private String email;
 
-    @Column(name = "gender", length = 16)
+    @Column(name = "gender", length = 8)
     private String gender;
 
     @Column(name = "nickname", length = 64)
     private String nickname;
 
-    @Column
+    @Column(name = "signature", length = 64)
     private String signature;
 
     @Column
     private String description;
 
     @Column
-    private boolean enabled;
+    private Boolean enabled;
 
     @CreatedDate
     @Column(name = "created_date", updatable = false)
@@ -56,8 +60,8 @@ public class User implements Serializable {
     @Column(name = "updated_date")
     private Instant updatedDate;
 
-    @ManyToMany(targetEntity = Role.class, cascade = CascadeType.ALL)
-    @JoinTable(name = "role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @ManyToMany
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     public User() {
@@ -151,11 +155,11 @@ public class User implements Serializable {
         this.description = description;
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -181,6 +185,31 @@ public class User implements Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        User user = (User) object;
+        return enabled == user.enabled &&
+                Objects.equals(id, user.id) &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(dob, user.dob) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(gender, user.gender) &&
+                Objects.equals(nickname, user.nickname) &&
+                Objects.equals(signature, user.signature) &&
+                Objects.equals(description, user.description) &&
+                Objects.equals(createdDate, user.createdDate) &&
+                Objects.equals(updatedDate, user.updatedDate) &&
+                Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, dob, email, gender, nickname, signature, description, enabled, createdDate, updatedDate, roles);
     }
 
 }
