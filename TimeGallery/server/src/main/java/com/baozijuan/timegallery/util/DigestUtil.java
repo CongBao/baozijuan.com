@@ -10,7 +10,7 @@ public class DigestUtil {
     private DigestUtil() {
     }
 
-    public static String digest(String str) {
+    public static String digest(CharSequence cs) {
         MessageDigest md;
         try {
             md = MessageDigest.getInstance("SHA-256");
@@ -18,7 +18,7 @@ public class DigestUtil {
             e.printStackTrace();
             return null;
         }
-        md.update(str.getBytes(StandardCharsets.UTF_8));
+        md.update(cs.toString().getBytes(StandardCharsets.UTF_8));
         return DatatypeConverter.printHexBinary(md.digest()).toUpperCase();
     }
 

@@ -1,21 +1,26 @@
 package com.baozijuan.timegallery.bean;
 
-import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "role")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Role implements Serializable {
 
+    public static final Role VISITOR = new Role(1L, "VISITOR");
+    public static final Role USER = new Role(2L, "USER");
+    public static final Role ADMIN = new Role(3L, "ADMIN");
+
     @Id
-    @Column(name = "role_id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "role_name", unique = true, nullable = false, length = 64)

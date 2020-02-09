@@ -2,12 +2,13 @@ package com.baozijuan.timegallery.service;
 
 import com.baozijuan.timegallery.bean.Role;
 import com.baozijuan.timegallery.bean.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     //// CREATE ////
 
@@ -27,19 +28,17 @@ public interface UserService {
 
     //// READ ////
 
-    List<User> getAllUsers();
+    List<User> loadAllUsers();
 
-    User getUserById(Long id);
+    User loadUserById(Long id);
 
-    User getUserByUsername(String username);
+    User loadUserByEmail(String email);
 
-    User getUserByEmail(String email);
+    Set<Role> loadRolesById(Long id);
 
-    Set<Role> getRolesById(Long id);
+    Set<Role> loadRolesByUsername(String username);
 
-    Set<Role> getRolesByUsername(String username);
-
-    Set<Role> getRolesByEmail(String email);
+    Set<Role> loadRolesByEmail(String email);
 
     //// UPDATE ////
 
@@ -58,6 +57,12 @@ public interface UserService {
     User updateSignatureById(Long id, String signature);
 
     User updateDescriptionById(Long id, String description);
+
+    User updateAccountNonExpiredById(Long id, boolean accountNonExpired);
+
+    User updateAccountNonLockedById(Long id, boolean accountNonLocked);
+
+    User updateCredentialsNonExpiredById(Long id, boolean credentialsNonExpired);
 
     User updateEnabledById(Long id, boolean enabled);
 

@@ -72,7 +72,7 @@ public class Response<T> implements Serializable {
     }
 
     public static <T> Response<T> ok() {
-        return Response.ok(null);
+        return ok(null);
     }
 
     public static <T> Response<T> ok(T object) {
@@ -80,7 +80,7 @@ public class Response<T> implements Serializable {
     }
 
     public static <T> Response<T> badRequest() {
-        return Response.badRequest(null);
+        return badRequest(null);
     }
 
     public static <T> Response<T> badRequest(T data) {
@@ -88,7 +88,7 @@ public class Response<T> implements Serializable {
     }
 
     public static <T> Response<T> unauthorized() {
-        return Response.unauthorized(null);
+        return unauthorized(null);
     }
 
     public static <T> Response<T> unauthorized(T data) {
@@ -96,7 +96,7 @@ public class Response<T> implements Serializable {
     }
 
     public static <T> Response<T> forbidden() {
-        return Response.forbidden(null);
+        return forbidden(null);
     }
 
     public static <T> Response<T> forbidden(T data) {
@@ -104,7 +104,7 @@ public class Response<T> implements Serializable {
     }
 
     public static <T> Response<T> notFound() {
-        return Response.notFound(null);
+        return notFound(null);
     }
 
     public static <T> Response<T> notFound(T data) {
@@ -112,7 +112,7 @@ public class Response<T> implements Serializable {
     }
 
     public static <T> Response<T> methodNotAllowed() {
-        return Response.methodNotAllowed(null);
+        return methodNotAllowed(null);
     }
 
     public static <T> Response<T> methodNotAllowed(T data) {
@@ -120,7 +120,7 @@ public class Response<T> implements Serializable {
     }
 
     public static <T> Response<T> internalServerError() {
-        return Response.internalServerError(null);
+        return internalServerError(null);
     }
 
     public static <T> Response<T> internalServerError(T data) {
@@ -128,11 +128,15 @@ public class Response<T> implements Serializable {
     }
 
     public static <T> Response<T> notImplemented() {
-        return Response.notImplemented(null);
+        return notImplemented(null);
     }
 
     public static <T> Response<T> notImplemented(T data) {
         return new Response<>(Status.NOT_IMPLEMENTED, data);
+    }
+
+    public static <T> Response<T> okOrNotFound(T data) {
+        return data == null ? notFound() : ok(data);
     }
 
 }

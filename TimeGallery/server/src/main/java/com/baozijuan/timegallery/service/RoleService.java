@@ -1,10 +1,8 @@
 package com.baozijuan.timegallery.service;
 
 import com.baozijuan.timegallery.bean.Role;
-import com.baozijuan.timegallery.bean.User;
 
 import java.util.List;
-import java.util.Set;
 
 public interface RoleService {
 
@@ -20,11 +18,11 @@ public interface RoleService {
 
     //// READ ////
 
-    List<Role> getAllRoles();
+    List<Role> loadAllRoles();
 
-    Role getRoleById(Long id);
+    Role loadRoleById(Long id);
 
-    Role getRoleByRoleName(String roleName);
+    Role loadRoleByRoleName(String roleName);
 
     //// UPDATE ////
 

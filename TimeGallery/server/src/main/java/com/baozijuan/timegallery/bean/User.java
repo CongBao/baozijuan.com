@@ -1,27 +1,31 @@
 package com.baozijuan.timegallery.bean;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "user")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class User implements Serializable {
+public class User implements UserDetails {
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -49,8 +53,17 @@ public class User implements Serializable {
     @Column
     private String description;
 
-    @Column
-    private Boolean enabled;
+    @Column(name = "account_non_expired", nullable = false)
+    private boolean accountNonExpired;
+
+    @Column(name = "account_non_locked", nullable = false)
+    private boolean accountNonLocked;
+
+    @Column(name = "credentials_non_expired", nullable = false)
+    private boolean credentialsNonExpired;
+
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
 
     @CreatedDate
     @Column(name = "created_date", updatable = false)
@@ -60,28 +73,9 @@ public class User implements Serializable {
     @Column(name = "updated_date")
     private Instant updatedDate;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-
-    public User() {
-    }
-
-    public User(Long id, String username, String password, Instant dob, String email, String gender, String nickname, String signature, String description, boolean enabled, Instant createdDate, Instant updatedDate, Set<Role> roles) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.dob = dob;
-        this.email = email;
-        this.gender = gender;
-        this.nickname = nickname;
-        this.signature = signature;
-        this.description = description;
-        this.enabled = enabled;
-        this.createdDate = createdDate;
-        this.updatedDate = updatedDate;
-        this.roles = roles;
-    }
 
     public Long getId() {
         return id;
@@ -91,6 +85,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -99,6 +94,7 @@ public class User implements Serializable {
         this.username = username;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -155,11 +151,39 @@ public class User implements Serializable {
         this.description = description;
     }
 
-    public Boolean isEnabled() {
+    @Override
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -188,11 +212,22 @@ public class User implements Serializable {
     }
 
     @Override
+    @JsonIgnore
+    public Set<GrantedAuthority> getAuthorities() {
+        return roles.stream()
+                .map(r -> new SimpleGrantedAuthority("ROLE_" + r.getRoleName()))
+                .collect(Collectors.toSet());
+    }
+
+    @Override
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         User user = (User) object;
-        return enabled == user.enabled &&
+        return accountNonExpired == user.accountNonExpired &&
+                accountNonLocked == user.accountNonLocked &&
+                credentialsNonExpired == user.credentialsNonExpired &&
+                enabled == user.enabled &&
                 Objects.equals(id, user.id) &&
                 Objects.equals(username, user.username) &&
                 Objects.equals(password, user.password) &&
@@ -209,7 +244,7 @@ public class User implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, dob, email, gender, nickname, signature, description, enabled, createdDate, updatedDate, roles);
+        return Objects.hash(id, username, password, dob, email, gender, nickname, signature, description, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, createdDate, updatedDate, roles);
     }
 
 }

@@ -1,16 +1,17 @@
 package com.baozijuan.timegallery.service.impl;
 
 import com.baozijuan.timegallery.bean.Role;
-import com.baozijuan.timegallery.bean.User;
 import com.baozijuan.timegallery.dao.RoleDao;
 import com.baozijuan.timegallery.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Set;
 
 @Service
+@Transactional
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
@@ -32,25 +33,29 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> getAllRoles() {
+    public List<Role> loadAllRoles() {
         return roleDao.findAll();
     }
 
     @Override
-    public Role getRoleById(Long id) {
-        return roleDao.getOne(id);
+    public Role loadRoleById(Long id) {
+        return roleDao.findById(id).orElse(null);
     }
 
     @Override
-    public Role getRoleByRoleName(String roleName) {
+    public Role loadRoleByRoleName(String roleName) {
         return roleDao.findByRoleName(roleName);
     }
 
     @Override
     public Role updateRoleNameById(Long id, String roleName) {
-        Role role = roleDao.getOne(id);
-        role.setRoleName(roleName);
-        return roleDao.save(role);
+        try {
+            Role role = roleDao.getOne(id);
+            role.setRoleName(roleName);
+            return roleDao.save(role);
+        } catch (EntityNotFoundException e) {
+            return null;
+        }
     }
 
     @Override
