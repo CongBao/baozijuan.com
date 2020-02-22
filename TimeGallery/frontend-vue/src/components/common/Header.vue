@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="dark bg-transparent" fixed="top">
+    <b-navbar toggleable="lg" type="dark" variant="bg-transparent" fixed="top">
       <b-navbar-brand href="#">Time Gallery</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
@@ -37,3 +37,15 @@ export default {
   name: "Header"
 }
 </script>
+
+<style scoped>
+.form-control {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+}
+b-button {
+  border: 1px solid white;
+  color: white;
+}
+</style>
