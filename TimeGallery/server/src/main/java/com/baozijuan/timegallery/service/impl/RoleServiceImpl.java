@@ -1,6 +1,6 @@
 package com.baozijuan.timegallery.service.impl;
 
-import com.baozijuan.timegallery.bean.Role;
+import com.baozijuan.timegallery.bean.domain.Role;
 import com.baozijuan.timegallery.repository.RoleRepository;
 import com.baozijuan.timegallery.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;

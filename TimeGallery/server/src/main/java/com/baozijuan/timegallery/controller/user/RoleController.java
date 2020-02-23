@@ -1,7 +1,7 @@
 package com.baozijuan.timegallery.controller.user;
 
 import com.baozijuan.timegallery.bean.Response;
-import com.baozijuan.timegallery.bean.Role;
+import com.baozijuan.timegallery.bean.domain.Role;
 import com.baozijuan.timegallery.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

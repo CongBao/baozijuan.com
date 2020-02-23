@@ -33,8 +33,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             auth.setDetails(new WebAuthenticationDetails(request));
             SecurityContextHolder.getContext().setAuthentication(auth);
-            chain.doFilter(request, response);
         }
+        chain.doFilter(request, response);
     }
 
     private String parseJwt(HttpServletRequest request) {

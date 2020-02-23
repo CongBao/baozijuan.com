@@ -1,4 +1,4 @@
-package com.baozijuan.timegallery.bean;
+package com.baozijuan.timegallery.bean.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

@@ -1,14 +1,14 @@
-package com.baozijuan.timegallery.bean.payload;
+package com.baozijuan.timegallery.bean.vo;
 
-import com.baozijuan.timegallery.bean.Role;
-import com.baozijuan.timegallery.bean.User;
+import com.baozijuan.timegallery.bean.domain.Role;
+import com.baozijuan.timegallery.bean.domain.User;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginInfo implements Serializable {
+public class UserView implements Serializable {
 
     private Long id;
     private String jwt;
@@ -22,19 +22,23 @@ public class LoginInfo implements Serializable {
     private String description;
     private List<Role> roles;
 
-    public static LoginInfo of(User user, String jwt) {
-        LoginInfo loginInfo = new LoginInfo();
-        loginInfo.setId(user.getId());
-        loginInfo.setJwt(jwt);
-        loginInfo.setUsername(user.getUsername());
-        loginInfo.setDob(user.getDob());
-        loginInfo.setEmail(user.getEmail());
-        loginInfo.setGender(user.getGender());
-        loginInfo.setNickname(user.getNickname());
-        loginInfo.setSignature(user.getSignature());
-        loginInfo.setDescription(user.getDescription());
-        loginInfo.setRoles(new ArrayList<>(user.getRoles()));
-        return loginInfo;
+    public static UserView of (User user) {
+        return of(user, null);
+    }
+
+    public static UserView of(User user, String jwt) {
+        UserView userView = new UserView();
+        userView.setId(user.getId());
+        userView.setJwt(jwt);
+        userView.setUsername(user.getUsername());
+        userView.setDob(user.getDob());
+        userView.setEmail(user.getEmail());
+        userView.setGender(user.getGender());
+        userView.setNickname(user.getNickname());
+        userView.setSignature(user.getSignature());
+        userView.setDescription(user.getDescription());
+        userView.setRoles(new ArrayList<>(user.getRoles()));
+        return userView;
     }
 
     public Long getId() {

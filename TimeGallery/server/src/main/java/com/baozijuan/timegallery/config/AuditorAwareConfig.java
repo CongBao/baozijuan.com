@@ -1,6 +1,6 @@
 package com.baozijuan.timegallery.config;
 
-import com.baozijuan.timegallery.bean.User;
+import com.baozijuan.timegallery.bean.domain.User;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

@@ -1,6 +1,6 @@
 package com.baozijuan.timegallery.repository;
 
-import com.baozijuan.timegallery.bean.User;
+import com.baozijuan.timegallery.bean.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

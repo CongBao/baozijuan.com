@@ -1,7 +1,7 @@
 package com.baozijuan.timegallery.service;
 
-import com.baozijuan.timegallery.bean.Role;
-import com.baozijuan.timegallery.bean.User;
+import com.baozijuan.timegallery.bean.domain.Role;
+import com.baozijuan.timegallery.bean.domain.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.time.Instant;

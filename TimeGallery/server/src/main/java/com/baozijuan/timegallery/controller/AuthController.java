@@ -1,8 +1,8 @@
 package com.baozijuan.timegallery.controller;
 
 import com.baozijuan.timegallery.bean.Response;
-import com.baozijuan.timegallery.bean.User;
-import com.baozijuan.timegallery.bean.payload.LoginInfo;
+import com.baozijuan.timegallery.bean.domain.User;
+import com.baozijuan.timegallery.bean.vo.UserView;
 import com.baozijuan.timegallery.service.UserService;
 import com.baozijuan.timegallery.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class AuthController {
             SecurityContextHolder.getContext().setAuthentication(auth);
             String jwt = jwtUtil.generateToken(auth);
             User user = (User) auth.getPrincipal();
-            return Response.ok(LoginInfo.of(user, jwt));
+            return Response.ok(UserView.of(user, jwt));
         } catch (DisabledException e) {
             return Response.forbidden("Account disabled");
         } catch (LockedException e) {
@@ -67,16 +67,7 @@ public class AuthController {
         if (userService.isUserExistByEmail(user.getEmail())) {
             return Response.badRequest("Email exists");
         }
-        try {
-            User registered = userService.addUser(user);
-            Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-            SecurityContextHolder.getContext().setAuthentication(auth);
-            String jwt = jwtUtil.generateToken(auth);
-            return Response.ok(LoginInfo.of(registered, jwt));
-        } catch (AuthenticationException e) {
-            return Response.internalServerError();
-        }
+        return Response.ok(UserView.of(userService.addUser(user)));
     }
 
 }

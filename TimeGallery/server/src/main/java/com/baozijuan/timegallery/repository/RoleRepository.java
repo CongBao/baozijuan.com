@@ -1,6 +1,6 @@
 package com.baozijuan.timegallery.repository;
 
-import com.baozijuan.timegallery.bean.Role;
+import com.baozijuan.timegallery.bean.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

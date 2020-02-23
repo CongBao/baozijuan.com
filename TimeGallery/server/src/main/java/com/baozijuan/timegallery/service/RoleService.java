@@ -1,6 +1,6 @@
 package com.baozijuan.timegallery.service;
 
-import com.baozijuan.timegallery.bean.Role;
+import com.baozijuan.timegallery.bean.domain.Role;
 
 import java.util.List;
 
