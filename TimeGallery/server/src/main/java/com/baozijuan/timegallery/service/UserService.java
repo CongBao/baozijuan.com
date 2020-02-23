@@ -12,13 +12,9 @@ public interface UserService extends UserDetailsService {
 
     //// CREATE ////
 
-    User registerUser(User user);
+    User addUser(User user);
 
     //// CHECK ////
-
-    boolean loginByUsernameAndPassword(String username, String password);
-
-    boolean loginByEmailAndPassword(String email, String password);
 
     boolean isUserExistById(Long id);
 

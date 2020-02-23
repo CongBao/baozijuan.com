@@ -8,7 +8,7 @@ public interface RoleService {
 
     //// CREATE ////
 
-    Role registerRole(Role role);
+    Role addRole(Role role);
 
     //// CHECK ////
 

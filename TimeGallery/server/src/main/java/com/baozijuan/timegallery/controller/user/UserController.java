@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/rest/user")
 @PreAuthorize("hasRole('USER')")
 public class UserController {
 

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/rest/user")
 @PreAuthorize("hasRole('USER')")
 public class RoleController {
 

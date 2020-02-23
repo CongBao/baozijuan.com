@@ -16,3 +16,8 @@ spring:
 logging:
   file:
     name: log/timegallery.log
+
+timegallery:
+  jwt:
+    secret: timegallerySecretKey
+    expiration-ms: 86400000
