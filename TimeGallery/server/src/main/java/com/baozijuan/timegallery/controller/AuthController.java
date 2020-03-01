@@ -2,7 +2,7 @@ package com.baozijuan.timegallery.controller;
 
 import com.baozijuan.timegallery.bean.Response;
 import com.baozijuan.timegallery.bean.domain.User;
-import com.baozijuan.timegallery.bean.vo.UserView;
+import com.baozijuan.timegallery.bean.view.UserView;
 import com.baozijuan.timegallery.service.UserService;
 import com.baozijuan.timegallery.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +42,9 @@ public class AuthController {
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password));
             SecurityContextHolder.getContext().setAuthentication(auth);
-            String jwt = jwtUtil.generateToken(auth);
+            String token = jwtUtil.generateToken(auth);
             User user = (User) auth.getPrincipal();
-            return Response.ok(UserView.of(user, jwt));
+            return Response.ok(UserView.of(user, token));
         } catch (DisabledException e) {
             return Response.forbidden("Account disabled");
         } catch (LockedException e) {

@@ -1,4 +1,4 @@
-package com.baozijuan.timegallery.bean.vo;
+package com.baozijuan.timegallery.bean.view;
 
 import com.baozijuan.timegallery.bean.domain.Role;
 import com.baozijuan.timegallery.bean.domain.User;
@@ -11,7 +11,7 @@ import java.util.List;
 public class UserView implements Serializable {
 
     private Long id;
-    private String jwt;
+    private String token;
 
     private String username;
     private Instant dob;
@@ -26,10 +26,10 @@ public class UserView implements Serializable {
         return of(user, null);
     }
 
-    public static UserView of(User user, String jwt) {
+    public static UserView of(User user, String token) {
         UserView userView = new UserView();
         userView.setId(user.getId());
-        userView.setJwt(jwt);
+        userView.setToken(token);
         userView.setUsername(user.getUsername());
         userView.setDob(user.getDob());
         userView.setEmail(user.getEmail());
@@ -49,12 +49,12 @@ public class UserView implements Serializable {
         this.id = id;
     }
 
-    public String getJwt() {
-        return jwt;
+    public String getToken() {
+        return token;
     }
 
-    public void setJwt(String jwt) {
-        this.jwt = jwt;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getUsername() {

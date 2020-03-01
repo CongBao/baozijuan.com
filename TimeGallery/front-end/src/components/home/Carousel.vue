@@ -23,7 +23,7 @@
 </template>
 
 <script>
-  export default {
-    name: "Carousel"
-  }
+export default {
+  name: 'Carousel'
+}
 </script>
