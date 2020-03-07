@@ -10,15 +10,15 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/rest/auth")
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManager authManager;
 
     @Autowired
     private UserService userService;
@@ -39,8 +39,7 @@ public class AuthController {
     @PostMapping("/login")
     public Response<?> login(@RequestParam String username, @RequestParam String password) {
         try {
-            Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password));
+            Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             SecurityContextHolder.getContext().setAuthentication(auth);
             String token = jwtUtil.generateToken(auth);
             User user = (User) auth.getPrincipal();
@@ -52,7 +51,9 @@ public class AuthController {
         } catch (BadCredentialsException e) {
             return Response.forbidden("Wrong password");
         } catch (AuthenticationException e) {
-            return Response.forbidden();
+            return Response.forbidden("Account not found");
+        } catch (Exception e) {
+            return Response.internalServerError(e.getMessage());
         }
     }
 
@@ -67,7 +68,11 @@ public class AuthController {
         if (userService.isUserExistByEmail(user.getEmail())) {
             return Response.badRequest("Email exists");
         }
-        return Response.ok(UserView.of(userService.addUser(user)));
+        User added = userService.addUser(user);
+        Authentication auth = new PreAuthenticatedAuthenticationToken(added, null, added.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        String token = jwtUtil.generateToken(auth);
+        return Response.ok(UserView.of(added, token));
     }
 
 }

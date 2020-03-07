@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
 import java.util.Date;
 
 @Component
@@ -24,11 +23,10 @@ public class JwtUtil {
 
     public String generateToken(Authentication auth) {
         UserDetails user = (UserDetails) auth.getPrincipal();
-        Instant now = Instant.now();
         return Jwts.builder()
                 .setSubject(user.getUsername())
-                .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(Instant.ofEpochMilli(now.toEpochMilli() + jwtExpirationMs)))
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }

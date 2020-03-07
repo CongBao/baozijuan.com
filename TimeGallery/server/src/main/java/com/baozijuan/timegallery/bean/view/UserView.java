@@ -27,6 +27,9 @@ public class UserView implements Serializable {
     }
 
     public static UserView of(User user, String token) {
+        if (user == null) {
+            return null;
+        }
         UserView userView = new UserView();
         userView.setId(user.getId());
         userView.setToken(token);
