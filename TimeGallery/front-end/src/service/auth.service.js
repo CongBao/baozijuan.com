@@ -5,7 +5,6 @@ class AuthService {
 
   async login(user) {
     const response = await axios.post('/auth/login', qs.stringify(user));
-    console.log(response);
     if (response.body.status.code == 200) {
       localStorage.setItem('user', JSON.stringify(response.body.data));
     }
@@ -14,6 +13,12 @@ class AuthService {
 
   logout() {
     localStorage.removeItem('user');
+  }
+
+  async register(user) {
+    const config = {headers: {'Content-Type': 'application/json'}}
+    const response = await axios.post('/auth/register', user, config);
+    return response.body;
   }
 
 }
