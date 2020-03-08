@@ -1,7 +1,6 @@
 package com.baozijuan.timegallery.controller.user;
 
 import com.baozijuan.timegallery.bean.Response;
-import com.baozijuan.timegallery.bean.domain.User;
 import com.baozijuan.timegallery.bean.view.UserView;
 import com.baozijuan.timegallery.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -32,7 +32,7 @@ public class User implements UserDetails {
     @Column(name = "username", unique = true, nullable = false, length = 64)
     private String username;
 
-    @Column(name = "password", nullable = false, length = 64)
+    @Column(name = "password", nullable = false, length = 128)
     private String password;
 
     @Column(name = "dob")

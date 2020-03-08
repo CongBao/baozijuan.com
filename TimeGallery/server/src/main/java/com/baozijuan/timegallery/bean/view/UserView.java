@@ -22,7 +22,7 @@ public class UserView implements Serializable {
     private String description;
     private List<Role> roles;
 
-    public static UserView of (User user) {
+    public static UserView of(User user) {
         return of(user, null);
     }
 

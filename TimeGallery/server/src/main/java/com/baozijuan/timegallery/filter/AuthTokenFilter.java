@@ -1,12 +1,11 @@
 package com.baozijuan.timegallery.filter;
 
-import com.baozijuan.timegallery.service.UserService;
 import com.baozijuan.timegallery.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
@@ -23,7 +22,7 @@ import java.io.IOException;
 public class AuthTokenFilter extends OncePerRequestFilter {
 
     @Autowired
-    private UserService userService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -33,7 +32,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         String jwt = parseJwt(request);
         if (jwt != null && jwtUtil.validateToken(jwt)) {
             String username = jwtUtil.getUsernameFromToken(jwt);
-            UserDetails user = userService.loadUserByUsername(username);
+            UserDetails user = userDetailsService.loadUserByUsername(username);
             AbstractAuthenticationToken auth = new PreAuthenticatedAuthenticationToken(user, null, user.getAuthorities());
             auth.setDetails(new WebAuthenticationDetails(request));
             SecurityContextHolder.getContext().setAuthentication(auth);
